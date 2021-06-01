@@ -44,7 +44,6 @@ public class CommentController {
         if (user.isPresent()) {
             Optional<Post> post1 = postService.getPostById(postId);
             if (post1.isPresent()) {
-//                comment.setUser(user.get());
                 comment.setUser(user.get());
                 comment.setPost(post1.get());
                 commentService.addComment(comment);
@@ -103,7 +102,7 @@ public class CommentController {
 
 
     //Like a post
-    @PostMapping(path = "/{commentId}/like/{userId}")
+    @PostMapping(path = "/{commentId}/{userId}")
     public ResponseEntity<?> likeComment(@PathVariable(name = "commentId") Long commentId, @PathVariable(name = "userId") Long userId) {
         Optional<User> user = userService.getUserById(userId);
         Optional<Comment> comment = commentService.getCommentById(commentId);
@@ -115,10 +114,10 @@ public class CommentController {
                     commentLike.setComment(comment.get());
                     commentLike.setUser(user.get());
                     commentLikeService.addCommentLike(commentLike);
-                    return new ResponseEntity<>(HttpStatus.OK);
+                    return new ResponseEntity<>("Comment Liked",HttpStatus.OK);
                 } else {
                     commentLikeService.deleteCommentLike(like);
-                    return new ResponseEntity<>(HttpStatus.OK);
+                    return new ResponseEntity<>("Comment Unliked",HttpStatus.OK);
                 }
             }
         }

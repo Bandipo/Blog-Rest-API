@@ -15,6 +15,9 @@ import java.util.List;
 @Entity
 @Table(name ="comments")
 public class Comment implements Serializable {
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -20,13 +20,13 @@ public class UserController {
      UserServiceImpl userService;
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> registerUser(@Validated @RequestBody User user) {
-        User user1 = userService.getUserByEmail(user.getEmail());
+    public ResponseEntity<?> registerUser(@RequestBody User user) { //@Validated was added
+        User user1 = userService.getUserByEmail(user.getEmail());//gets the user from the database
         if (user1 == null) {
             userService.addUser(user);
             return new ResponseEntity<>("User has been created", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Email Already exists" , HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("User  Already exists" , HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping
